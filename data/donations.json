@@ -1,0 +1,22 @@
+[
+  { "name": "Alex", "amount": 125, "message": "For every kid finding their finish line." },
+  { "name": "Sam", "amount": 17, "message": "Tiny gift, big belief." },
+  { "name": "Jordan", "amount": 250, "message": "Run loud. Run proud." },
+  { "name": "Taylor", "amount": 88, "message": "Fueling the bridge miles." },
+  { "name": "Casey", "amount": 5, "message": "Every step counts." },
+  { "name": "Morgan", "amount": 249.5, "message": "26.2 with heart." },
+  { "name": "Riley", "amount": 200, "message": "Queens will be electric." },
+  { "name": "Avery", "amount": 31.25, "message": "One exact 0.25 mile." },
+  { "name": "Parker", "amount": 73, "message": "Finish line energy incoming." },
+  { "name": "Rowan", "amount": 150, "message": "For the next generation." },
+  { "name": "Jamie", "amount": 42, "message": "Run the city." },
+  { "name": "Reese", "amount": 155, "message": "This mission matters." },
+  { "name": "Drew", "amount": 210, "message": "Keep climbing." },
+  { "name": "Quinn", "amount": 19, "message": "Adding a little extra push." },
+  { "name": "Charlie", "amount": 175, "message": "Strong stride all day." },
+  { "name": "Harper", "amount": 180, "message": "Cheering every borough." },
+  { "name": "Skyler", "amount": 190, "message": "You got this." },
+  { "name": "Emerson", "amount": 13, "message": "For the mission." },
+  { "name": "Peyton", "amount": 250, "message": "All gas, no quit." },
+  { "name": "Finley", "amount": 64, "message": "The victory lap is real." }
+]

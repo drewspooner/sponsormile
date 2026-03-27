@@ -1,0 +1,7 @@
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="240" height="240" rx="44" fill="#0F172A"/>
+  <path d="M48 166C78 152 105 134 133 105C149 89 162 71 175 54" stroke="#F59E0B" stroke-width="16" stroke-linecap="round"/>
+  <path d="M62 191C96 178 127 163 154 137C173 119 187 101 200 81" stroke="#38BDF8" stroke-width="12" stroke-linecap="round" stroke-dasharray="8 10"/>
+  <circle cx="72" cy="66" r="20" fill="#EC4899"/>
+  <text x="120" y="220" text-anchor="middle" fill="#E2E8F0" font-size="24" font-family="Verdana, sans-serif" font-weight="700">MFT</text>
+</svg>
