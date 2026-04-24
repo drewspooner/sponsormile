@@ -1,3 +1,5 @@
+import { DONATION_PER_MILE } from "@/lib/segmentAllocator";
+
 type TooltipProps = {
   startMile: number;
   endMile: number;
@@ -31,7 +33,7 @@ export function SegmentTooltip({
 }: TooltipProps) {
   const rangeStart = donorSponsoredStartMile ?? startMile;
   const rangeEnd = donorSponsoredEndMile ?? endMile;
-  const displayAmount = donorTotalAmount ?? amount ?? 31.25;
+  const displayAmount = donorTotalAmount ?? amount ?? DONATION_PER_MILE * 0.25;
 
   return (
     <div className="min-w-[220px] text-sm text-slate-100">

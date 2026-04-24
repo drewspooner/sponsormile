@@ -25,7 +25,6 @@ function toLatLng(coords: Coordinate[]): LatLngTuple[] {
 export function FundraisingMap({ routeCoordinates, donations, fundedMiles }: FundraisingMapProps) {
   const [selected, setSelected] = useState<SegmentAllocation | null>(null);
   const [animatedMiles, setAnimatedMiles] = useState(0);
-  const [isAnimating, setAnimating] = useState(true);
   const mapRef = useRef<LeafletMap | null>(null);
 
   const segments = useMemo(() => buildSegments(routeCoordinates, donations), [routeCoordinates, donations]);
@@ -45,8 +44,6 @@ export function FundraisingMap({ routeCoordinates, donations, fundedMiles }: Fun
       setAnimatedMiles(target * t);
       if (t < 1) {
         raf = requestAnimationFrame(tick);
-      } else {
-        setAnimating(false);
       }
     };
 
@@ -55,12 +52,19 @@ export function FundraisingMap({ routeCoordinates, donations, fundedMiles }: Fun
   }, [fundedMiles]);
 
   return (
-    <section className="card-dark p-4">
-      <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-white">Route Progress Map</h2>
-        <p className="font-mono text-sm text-slate-400">{routeMiles.toFixed(1)} route miles loaded</p>
+    <section className="card-dark p-5 md:p-6">
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-emerald-300/85">Live visualization</p>
+          <h2 className="font-display mt-1 text-2xl font-extrabold tracking-tight text-white md:text-3xl">
+            Route Progress Map
+          </h2>
+        </div>
+        <p className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 font-mono text-xs text-violet-200/90">
+          {routeMiles.toFixed(1)} route miles loaded
+        </p>
       </div>
-      <div className={`map-shell overflow-hidden rounded-xl ${isAnimating ? "animate-pulse" : ""}`}>
+      <div className="map-shell overflow-hidden rounded-2xl">
         <MapContainer
           center={mapCenter}
           zoom={10}
@@ -68,7 +72,7 @@ export function FundraisingMap({ routeCoordinates, donations, fundedMiles }: Fun
           maxBounds={maxBounds}
           maxBoundsViscosity={0.95}
           scrollWheelZoom
-          className="h-[560px] w-full"
+          className="h-[560px] w-full rounded-2xl"
           zoomControl={false}
           ref={mapRef}
           whenReady={() => {

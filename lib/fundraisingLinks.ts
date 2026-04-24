@@ -1,3 +1,5 @@
+import { DONATION_PER_MILE } from "@/lib/segmentAllocator";
+
 export const DEFAULT_FUNDRAISER_URL = "https://pro.gofundme.com/fundraiser/6498356";
 
 function fundraiserIdFromUrl(url: string): string | null {
@@ -25,8 +27,8 @@ export function buildCheckoutUrl(baseUrl: string, amount?: number): string {
 }
 
 export const DONATION_BUTTON_OPTIONS = [
-  { label: "Sponsor a quarter mile", amount: 31.25, tone: "cyan" as const },
-  { label: "Sponsor a half mile", amount: 62.5, tone: "cyan" as const },
-  { label: "Sponsor 1 mile", amount: 125, tone: "cyan" as const },
+  { label: "Sponsor a quarter mile", amount: DONATION_PER_MILE * 0.25, tone: "cyan" as const },
+  { label: "Sponsor a half mile", amount: DONATION_PER_MILE * 0.5, tone: "cyan" as const },
+  { label: "Sponsor 1 mile", amount: DONATION_PER_MILE, tone: "cyan" as const },
   { label: "Donate custom amount", amount: null, tone: "fuchsia" as const },
 ];

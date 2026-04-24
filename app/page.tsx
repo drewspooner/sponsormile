@@ -39,7 +39,7 @@ export default function HomePage() {
   const goFundMeWidgetUrl = process.env.NEXT_PUBLIC_GOFUNDME_WIDGET_URL ?? `${defaultWidgetUrl}/`;
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-6 px-4 py-6 pb-28 md:px-8">
+    <>
       <TopStickyBar
         totalRaised={summary.totalRaised}
         goal={summary.goal}
@@ -47,6 +47,7 @@ export default function HomePage() {
         marathonMiles={summary.marathonMiles}
         fundraiserUrl={fundraiserUrl}
       />
+      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-8 px-4 pb-28 pt-0 md:gap-10 md:px-8">
       <Hero checkoutBaseUrl={checkoutBaseUrl} />
       <DonationSelector checkoutBaseUrl={checkoutBaseUrl} />
 
@@ -57,11 +58,11 @@ export default function HomePage() {
       />
 
       <section className="grid gap-6 md:grid-cols-2">
-        <section className="card-dark p-6">
-          <h3 className="mb-4 text-xl font-semibold text-white">Your Impact</h3>
+        <section className="card-dark p-6 md:p-8">
+          <h3 className="font-display mb-4 text-2xl font-extrabold text-white md:text-3xl">Your Impact</h3>
           <p className="text-slate-300">
             The route fills in order of support, so you can instantly see how each donation helps carry this fundraiser
-            closer to the finish line for Garden of Dreams Foundation.
+            closer to the finish line for Beyond Type 1.
           </p>
           <p className="mt-3 text-slate-300">
             Behind each segment is support for young people and families who deserve access to opportunity, encouragement,
@@ -79,7 +80,7 @@ export default function HomePage() {
         widgetUrl={goFundMeWidgetUrl}
       />
       <VictoryLap victoryMiles={summary.victoryMiles} />
-
-    </main>
+      </main>
+    </>
   );
 }

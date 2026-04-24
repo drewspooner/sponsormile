@@ -23,7 +23,7 @@ export type SegmentAllocation = {
   coordinates: Coordinate[];
 };
 
-const DONATION_PER_MILE = 125;
+export const DONATION_PER_MILE = 200;
 const MILES_PER_SEGMENT = 0.25;
 const MARATHON_MILES = 26.2;
 
@@ -43,7 +43,7 @@ export function getFundingSummary(donations: Donation[]) {
 
   return {
     totalRaised,
-    goal: 3250,
+    goal: 5000,
     fundedMiles,
     progressMiles,
     victoryMiles,

@@ -28,26 +28,26 @@ export function GoFundMeWidget({
   const currentSrc = candidates[candidateIndex];
 
   return (
-    <section className="card-dark p-6">
-      <h3 className="mb-2 text-xl font-semibold text-white">Donate via GoFundMe</h3>
+    <section className="card-dark p-6 md:p-8">
+      <h3 className="font-display mb-2 text-xl font-semibold text-white">Donate via GoFundMe</h3>
       <p className="mb-4 text-sm text-slate-300">
-        Using official `gfm-embed` script format first, then reverse-engineered fallbacks.
+        Using official <code className="text-violet-300">gfm-embed</code> script format first, then reverse-engineered fallbacks.
       </p>
 
       {hasEmbed ? (
         <div
-          className="gfm-widget-host overflow-hidden rounded-xl border border-white/10 bg-black/30 p-3"
+          className="gfm-widget-host overflow-hidden rounded-2xl border border-white/10 bg-black/30 p-3"
           dangerouslySetInnerHTML={{ __html: embedHtml ?? "" }}
         />
       ) : hasOfficialWidgetUrl ? (
         <>
           <Script src="https://www.gofundme.com/static/js/embed.js" strategy="lazyOnload" />
-          <div className="gfm-widget-host overflow-hidden rounded-xl border border-white/10 bg-black/30 p-2">
+          <div className="gfm-widget-host overflow-hidden rounded-2xl border border-white/10 bg-black/30 p-2">
             <div className="gfm-embed" data-url={widgetUrl} />
           </div>
         </>
       ) : currentSrc && !embedFailed ? (
-        <div className="gfm-widget-host overflow-hidden rounded-xl border border-white/10 bg-black/30 p-2">
+        <div className="gfm-widget-host overflow-hidden rounded-2xl border border-white/10 bg-black/30 p-2">
           <iframe
             key={currentSrc}
             title="GoFundMe donation widget"
@@ -65,7 +65,7 @@ export function GoFundMeWidget({
           />
         </div>
       ) : (
-        <div className="rounded-xl border border-dashed border-cyan-400/40 bg-cyan-400/5 p-4">
+        <div className="rounded-2xl border border-dashed border-emerald-400/35 bg-emerald-500/5 p-4">
           <p className="text-sm text-slate-200">No embeddable widget was available from tested URLs.</p>
           <p className="mt-1 text-xs text-slate-400">GoFundMe Pro often blocks third-party framing for fundraiser pages.</p>
         </div>
@@ -93,7 +93,7 @@ export function GoFundMeWidget({
         href={fundraiserUrl}
         target="_blank"
         rel="noreferrer"
-        className="mt-4 inline-flex rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-600 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110"
+        className="mt-4 inline-flex rounded-full bg-gradient-to-r from-emerald-400 via-violet-500 to-fuchsia-500 px-6 py-2.5 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-violet-950/30 transition hover:brightness-110"
       >
         Open Fundraiser
       </a>

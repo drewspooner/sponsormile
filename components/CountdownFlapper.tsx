@@ -60,8 +60,8 @@ export function CountdownFlapper() {
   return (
     <div className="flex flex-col items-center justify-center gap-2 text-center">
       <div className="flex flex-col items-center">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-cyan-300">Marathon Countdown</p>
-        <p className="text-xs text-slate-300">November 1, 2026</p>
+        <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-emerald-300">Marathon Countdown</p>
+        <p className="text-xs font-medium text-violet-200/90">November 1, 2026</p>
       </div>
       <div className="flex items-end justify-center gap-1.5">
         {digits.map((digit, index) => (
@@ -77,7 +77,7 @@ export function CountdownFlapper() {
             </span>
           </div>
         ))}
-        <span className="ml-1.5 text-xs font-semibold uppercase tracking-wide text-slate-300">days to go</span>
+        <span className="ml-1.5 text-xs font-semibold uppercase tracking-wide text-slate-400">days to go</span>
       </div>
     </div>
   );
