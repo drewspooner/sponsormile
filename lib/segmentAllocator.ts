@@ -1,9 +1,11 @@
 import { Coordinate, getRouteDistanceMiles, sliceRouteByMiles } from "@/lib/routeProcessor";
 
 export type Donation = {
+  id?: number;
   name: string;
   amount: number;
   message?: string;
+  donationDate?: number;
 };
 
 export type SegmentState = "unfunded" | "funded" | "victory";

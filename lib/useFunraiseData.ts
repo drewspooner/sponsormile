@@ -69,11 +69,13 @@ export function useFunraiseData(): FunraiseData {
         // Sort oldest-first so donations fill route segments in the order they were made.
         const sorted = [...raw].sort((a, b) => a.donationDate - b.donationDate);
 
-        const mapped: Donation[] = sorted.map((d) => ({
-          name: d.donorName,
-          amount: d.amount,
-          message: d.donationComments?.[0]?.comment || undefined,
-        }));
+                const mapped: Donation[] = sorted.map((d) => ({
+                  id: d.id,
+                  name: d.donorName,
+                  amount: d.amount,
+                  message: d.donationComments?.[0]?.comment || undefined,
+                  donationDate: d.donationDate,
+                }));
 
         setDonations(mapped);
         setGoal(campaignGoal);

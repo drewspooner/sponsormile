@@ -30,8 +30,15 @@ export function CampaignPage({
 }: Props) {
   const { donations: liveDonations, goal: liveGoal, loading } = useFunraiseData();
 
-  const activeDonations =
-    !loading && liveDonations.length > 0 ? liveDonations : initialDonations;
+  // Merge static (all-time cache) with live (most recent 10 from API).
+  // Live data wins on overlap — deduplicate by donation ID when available.
+  const activeDonations = useMemo(() => {
+    if (loading || liveDonations.length === 0) return initialDonations;
+    const liveIds = new Set(liveDonations.map((d) => d.id).filter(Boolean));
+    const staticOnly = initialDonations.filter((d) => !d.id || !liveIds.has(d.id));
+    const merged = [...staticOnly, ...liveDonations];
+    return merged.sort((a, b) => (a.donationDate ?? 0) - (b.donationDate ?? 0));
+  }, [loading, liveDonations, initialDonations]);
 
   const summary = useMemo(() => getFundingSummary(activeDonations), [activeDonations]);
 
