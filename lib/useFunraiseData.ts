@@ -6,9 +6,9 @@ import { Donation } from "@/lib/segmentAllocator";
 // These are public, unauthenticated endpoints confirmed via browser HAR.
 // The campaign site itself calls them from the browser with no auth headers.
 const PAGE_ID =
-  process.env.NEXT_PUBLIC_FUNRAISE_PAGE_ID ?? "1dd75249-443d-476f-ada3-8caae08f33be";
+  process.env.NEXT_PUBLIC_FUNRAISE_PAGE_ID || "1dd75249-443d-476f-ada3-8caae08f33be";
 const PLATFORM_URL =
-  process.env.NEXT_PUBLIC_FUNRAISE_PLATFORM_URL ?? "https://platform.funraise.io";
+  process.env.NEXT_PUBLIC_FUNRAISE_PLATFORM_URL || "https://platform.funraise.io";
 
 type RawDonation = {
   id: number;
