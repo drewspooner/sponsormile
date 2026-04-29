@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 type Props = {
@@ -21,6 +22,37 @@ function fmtUSD(value: number): string {
   });
 }
 
+function useCountUp(target: number, duration = 1400, delay = 300) {
+  const [display, setDisplay] = useState(0);
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    if (target === 0) return;
+    let startTime: number | null = null;
+
+    const delayTimer = setTimeout(() => {
+      const step = (now: number) => {
+        if (startTime === null) startTime = now;
+        const elapsed = now - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        // ease out expo
+        const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+        setDisplay(Math.round(target * eased));
+        if (t < 1) rafRef.current = requestAnimationFrame(step);
+        else setDisplay(target);
+      };
+      rafRef.current = requestAnimationFrame(step);
+    }, delay);
+
+    return () => {
+      clearTimeout(delayTimer);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [target, duration, delay]);
+
+  return display;
+}
+
 export function CampaignHero({
   totalRaised,
   goal,
@@ -33,6 +65,7 @@ export function CampaignHero({
 }: Props) {
   const pct = Math.max(0, Math.min(100, (totalRaised / goal) * 100));
   const milesRemaining = Math.max(0, marathonMiles - fundedMiles);
+  const animatedTotal = useCountUp(totalRaised);
 
   return (
     <section id="top" className="border-b border-rule">
@@ -61,7 +94,7 @@ export function CampaignHero({
           <div className="mt-10">
             <div className="flex items-baseline justify-between">
               <p className="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-                {fmtUSD(totalRaised)}
+                {fmtUSD(animatedTotal)}
               </p>
               <p className="text-sm text-muted">of {fmtUSD(goal)}</p>
             </div>
@@ -70,7 +103,7 @@ export function CampaignHero({
                 className="h-px bg-ink"
                 initial={{ width: 0 }}
                 animate={{ width: `${pct}%` }}
-                transition={{ duration: 0.9, delay: 0.1 }}
+                transition={{ duration: 1.4, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               />
             </div>
             <div className="mt-3 flex justify-between text-xs text-muted">
@@ -116,7 +149,6 @@ export function CampaignHero({
             {milesRemaining.toFixed(1)} miles left to fund.
           </p>
         </motion.div>
-
       </div>
     </section>
   );

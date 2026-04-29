@@ -57,3 +57,116 @@ body {
 .leaflet-tooltip.segment-tooltip::before {
   border-right-color: #1a1a18 !important;
 }
+
+/* Donor pin labels — permanent map callouts */
+.leaflet-tooltip.donor-pin-label {
+  background: #f8f6f1 !important;
+  border: 1px solid #1a1a18 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #1a1a18 !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
+  padding: 2px 6px !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+}
+
+.leaflet-tooltip-top.donor-pin-label::before {
+  border-top-color: #1a1a18 !important;
+}
+
+.leaflet-tooltip-bottom.donor-pin-label::before {
+  border-bottom-color: #1a1a18 !important;
+}
+
+.leaflet-tooltip-left.donor-pin-label::before {
+  border-left-color: #1a1a18 !important;
+}
+
+.leaflet-tooltip-right.donor-pin-label::before {
+  border-right-color: #1a1a18 !important;
+}
+
+/* Editorial flapper — header countdown */
+.editorial-flap-digit {
+  position: relative;
+  width: 1.15rem;
+  height: 1.5rem;
+  perspective: 180px;
+}
+
+.editorial-flap-digit .flap-top,
+.editorial-flap-digit .flap-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-monospace, "Courier New", monospace;
+  font-size: 1.1rem;
+  line-height: 1;
+  font-weight: 600;
+  color: #f8f6f1;
+  background: #1a1a18;
+  overflow: hidden;
+}
+
+.editorial-flap-digit .flap-top {
+  top: 0;
+  border-bottom: 1px solid rgba(248, 246, 241, 0.15);
+  transform-origin: bottom;
+}
+
+.editorial-flap-digit .flap-bottom {
+  bottom: 0;
+  transform-origin: top;
+}
+
+.editorial-flap-digit .flap-value {
+  position: absolute;
+  left: 50%;
+  width: 100%;
+  text-align: center;
+  transform: translateX(-50%);
+  line-height: 1.5rem;
+}
+
+.editorial-flap-digit .flap-value-top {
+  top: 0;
+}
+
+.editorial-flap-digit .flap-value-bottom {
+  top: -0.75rem;
+}
+
+.editorial-flap-digit.animate-flap .flap-top {
+  animation: flapTop 0.22s ease;
+}
+
+.editorial-flap-digit.animate-flap .flap-bottom {
+  animation: flapBottom 0.22s ease;
+}
+
+.editorial-flap-digit.flap-settle {
+  animation: flapSettle 0.32s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+@keyframes flapTop {
+  0%   { transform: rotateX(0deg);   filter: brightness(1.1); }
+  100% { transform: rotateX(-89deg); filter: brightness(0.8); }
+}
+
+@keyframes flapBottom {
+  0%   { transform: rotateX(89deg);  filter: brightness(0.75); }
+  100% { transform: rotateX(0deg);   filter: brightness(1); }
+}
+
+@keyframes flapSettle {
+  0%   { transform: scale(1);    filter: brightness(1); }
+  35%  { transform: scale(1.05); filter: brightness(1.1); }
+  100% { transform: scale(1);    filter: brightness(1); }
+}
