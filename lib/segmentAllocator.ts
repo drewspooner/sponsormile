@@ -28,7 +28,7 @@ const MILES_PER_SEGMENT = 0.25;
 const MARATHON_MILES = 26.2;
 
 const PALETTE = ["#1d4ed8", "#f97316", "#16a34a", "#7e22ce", "#ec4899"];
-const UNFUNDED_COLOR = "#cbd5e1";
+const UNFUNDED_COLOR = "#93b8d4";
 const VICTORY_COLOR = "#f59e0b";
 
 function round(value: number): number {
