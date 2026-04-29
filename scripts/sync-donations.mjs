@@ -13,9 +13,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_FILE = join(__dirname, "../data/donations.json");
 
 const PAGE_ID =
-  process.env.NEXT_PUBLIC_FUNRAISE_PAGE_ID ?? "1dd75249-443d-476f-ada3-8caae08f33be";
+  process.env.NEXT_PUBLIC_FUNRAISE_PAGE_ID || "1dd75249-443d-476f-ada3-8caae08f33be";
 const PLATFORM_URL =
-  process.env.NEXT_PUBLIC_FUNRAISE_PLATFORM_URL ?? "https://platform.funraise.io";
+  process.env.NEXT_PUBLIC_FUNRAISE_PLATFORM_URL || "https://platform.funraise.io";
 
 async function main() {
   console.log("Fetching donations from Funraise…");
