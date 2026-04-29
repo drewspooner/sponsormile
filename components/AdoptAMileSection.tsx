@@ -49,8 +49,8 @@ export function AdoptAMileSection({
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mt-4 max-w-xl text-base leading-relaxed text-muted"
         >
-          Each ${costPerQuarterMile.toFixed(0)} donated funds a quarter mile of the 26.2-mile
-          course. Donations are applied to the route in the order they&apos;re received.
+          Each ${costPerQuarterMile.toFixed(0)} donated funds a quarter mile of the 26.2-mile course.
+          Donations are applied to the route in the order they&apos;re received.
           Click any segment on the map to see who sponsored it.
         </motion.p>
 

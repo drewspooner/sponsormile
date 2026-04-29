@@ -92,7 +92,7 @@ export function CampaignHero({
                 data-formId={funraiseFormId}
                 className="bg-ink px-7 py-3 text-sm font-medium tracking-wide text-paper hover:bg-ink/90"
               >
-                Donate
+                Donate (via Funraise)
               </button>
             ) : (
               <a
@@ -101,7 +101,7 @@ export function CampaignHero({
                 rel="noreferrer"
                 className="bg-ink px-7 py-3 text-sm font-medium tracking-wide text-paper hover:bg-ink/90"
               >
-                Donate
+                Donate (via Funraise)
               </a>
             )}
             <a

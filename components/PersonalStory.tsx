@@ -52,17 +52,6 @@ export function PersonalStory() {
           </p>
         </motion.div>
 
-        {/* Pull quote */}
-        <motion.blockquote
-          {...fade}
-          transition={{ duration: 0.6, delay: 0.15 }}
-          className="my-12 border-l-2 border-ink py-2 pl-6"
-        >
-          <p className="font-display text-2xl font-medium italic leading-snug text-ink sm:text-3xl">
-            &ldquo;Type 1 only becomes a limit if I treat it like one.&rdquo;
-          </p>
-        </motion.blockquote>
-
         <motion.div
           {...fade}
           transition={{ duration: 0.6, delay: 0.2 }}
