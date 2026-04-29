@@ -22,6 +22,10 @@ function toLatLng(coords: Coordinate[]): LatLngTuple[] {
   return coords.map(([lng, lat]) => [lat, lng]);
 }
 
+function fmtUSD(v: number) {
+  return v.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+}
+
 export function FundraisingMap({ routeCoordinates, donations, fundedMiles }: FundraisingMapProps) {
   const [selected, setSelected] = useState<SegmentAllocation | null>(null);
   const [animatedMiles, setAnimatedMiles] = useState(0);
@@ -37,14 +41,12 @@ export function FundraisingMap({ routeCoordinates, donations, fundedMiles }: Fun
     let raf = 0;
     const started = performance.now();
     const target = Math.min(fundedMiles, 26.2);
-    const duration = 1800;
+    const duration = 1200;
 
     const tick = (now: number) => {
       const t = Math.min((now - started) / duration, 1);
       setAnimatedMiles(target * t);
-      if (t < 1) {
-        raf = requestAnimationFrame(tick);
-      }
+      if (t < 1) raf = requestAnimationFrame(tick);
     };
 
     raf = requestAnimationFrame(tick);
@@ -52,19 +54,17 @@ export function FundraisingMap({ routeCoordinates, donations, fundedMiles }: Fun
   }, [fundedMiles]);
 
   return (
-    <section className="card-dark p-5 md:p-6">
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-emerald-300/85">Live visualization</p>
-          <h2 className="font-display mt-1 text-2xl font-extrabold tracking-tight text-white md:text-3xl">
-            Route Progress Map
-          </h2>
-        </div>
-        <p className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 font-mono text-xs text-violet-200/90">
-          {routeMiles.toFixed(1)} route miles loaded
+    <div className="flex flex-col gap-4">
+      <div className="flex items-baseline justify-between border-b border-rule pb-2">
+        <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted">
+          Route Progress
         </p>
+        <span className="font-mono text-[11px] text-muted">
+          {routeMiles.toFixed(1)} mi loaded
+        </span>
       </div>
-      <div className="map-shell overflow-hidden rounded-2xl">
+
+      <div className="overflow-hidden border border-rule">
         <MapContainer
           center={mapCenter}
           zoom={10}
@@ -72,7 +72,7 @@ export function FundraisingMap({ routeCoordinates, donations, fundedMiles }: Fun
           maxBounds={maxBounds}
           maxBoundsViscosity={0.95}
           scrollWheelZoom
-          className="h-[560px] w-full rounded-2xl"
+          className="h-[420px] w-full"
           zoomControl={false}
           ref={mapRef}
           whenReady={() => {
@@ -86,33 +86,35 @@ export function FundraisingMap({ routeCoordinates, donations, fundedMiles }: Fun
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; CARTO'
-            url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
+            url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
           />
           <ZoomControl position="bottomright" />
           <SegmentLayer segments={segments} maxVisibleMile={animatedMiles} onSegmentClick={setSelected} />
         </MapContainer>
       </div>
+
       {selected && (
-        <div className="mt-4 rounded-xl border border-white/10 bg-slate-900/70 p-4 text-sm backdrop-blur">
-          <p className="font-semibold text-white">
-            Sponsored Miles {(selected.donorSponsoredStartMile ?? selected.startMile).toFixed(2)}-
+        <div className="border-l-2 border-ink pl-4">
+          <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted">
+            Mile {(selected.donorSponsoredStartMile ?? selected.startMile).toFixed(2)}–
             {(selected.donorSponsoredEndMile ?? selected.endMile).toFixed(2)}
           </p>
-          <p className="text-slate-300">{selected.donorName ? `Funded by ${selected.donorName}` : "Open segment"}</p>
-          {selected.donorMessage && <p className="mt-1 italic text-slate-400">&quot;{selected.donorMessage}&quot;</p>}
-          <p className="text-cyan-300">
-            {(selected.donorTotalAmount ?? selected.amount).toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            })}
+          <p className="mt-1 font-display text-lg text-ink">
+            {selected.donorName ?? "Open segment"}
           </p>
-          {selected.state === "victory" && (
-            <p className="mt-1 inline-flex rounded-full bg-amber-300/20 px-2 py-1 text-xs font-semibold text-amber-300">
-              Victory Lap
+          {selected.donorName && (
+            <p className="text-sm text-muted">
+              {fmtUSD(selected.donorTotalAmount ?? selected.amount)}
             </p>
+          )}
+          {selected.donorMessage && (
+            <p className="mt-1 text-sm italic text-muted">&ldquo;{selected.donorMessage}&rdquo;</p>
+          )}
+          {selected.state === "victory" && (
+            <p className="mt-1 text-xs uppercase tracking-[0.2em] text-ink">Victory Lap</p>
           )}
         </div>
       )}
-    </section>
+    </div>
   );
 }

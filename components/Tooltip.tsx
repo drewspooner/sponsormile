@@ -16,7 +16,7 @@ function fmtAmount(value: number): string {
   return value.toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
-    maximumFractionDigits: 2,
+    maximumFractionDigits: 0,
   });
 }
 
@@ -36,14 +36,18 @@ export function SegmentTooltip({
   const displayAmount = donorTotalAmount ?? amount ?? DONATION_PER_MILE * 0.25;
 
   return (
-    <div className="min-w-[220px] text-sm text-slate-100">
-      <p className="font-semibold text-cyan-200">
-        Sponsored Miles {rangeStart.toFixed(2)}-{rangeEnd.toFixed(2)}
+    <div className="min-w-[200px] text-sm text-ink">
+      <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted">
+        Mile {rangeStart.toFixed(2)}–{rangeEnd.toFixed(2)}
       </p>
-      <p className="text-slate-300">{donorName ? `Funded by ${donorName}` : "Still open"}</p>
-      <p className="font-semibold text-cyan-300">{fmtAmount(displayAmount)}</p>
-      {donorMessage && <p className="mt-1 text-xs italic text-slate-300">&quot;{donorMessage}&quot;</p>}
-      {isVictory && <p className="mt-1 font-semibold text-amber-300">Victory Lap</p>}
+      <p className="mt-1 font-semibold">
+        {donorName ?? "Open segment"}
+      </p>
+      {donorName && <p className="text-muted">{fmtAmount(displayAmount)}</p>}
+      {donorMessage && <p className="mt-1 italic text-muted">&quot;{donorMessage}&quot;</p>}
+      {isVictory && (
+        <p className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em]">Victory Lap</p>
+      )}
     </div>
   );
 }
