@@ -5,6 +5,7 @@ import Script from "next/script";
 import { Coordinate } from "@/lib/routeProcessor";
 import { Donation, getFundingSummary } from "@/lib/segmentAllocator";
 import { useFunraiseData } from "@/lib/useFunraiseData";
+import { applyOverrides } from "@/lib/applyOverrides";
 import { SiteHeader } from "./SiteHeader";
 import { CampaignHero } from "./CampaignHero";
 import { PersonalStory } from "./PersonalStory";
@@ -37,7 +38,8 @@ export function CampaignPage({
     const liveIds = new Set(liveDonations.map((d) => d.id).filter(Boolean));
     const staticOnly = initialDonations.filter((d) => !d.id || !liveIds.has(d.id));
     const merged = [...staticOnly, ...liveDonations];
-    return merged.sort((a, b) => (a.donationDate ?? 0) - (b.donationDate ?? 0));
+    const sorted = merged.sort((a, b) => (a.donationDate ?? 0) - (b.donationDate ?? 0));
+    return applyOverrides(sorted);
   }, [loading, liveDonations, initialDonations]);
 
   const summary = useMemo(() => getFundingSummary(activeDonations), [activeDonations]);

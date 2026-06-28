@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
   schedule:
-    # Sync donations and redeploy every 12 hours (8 AM and 8 PM ET)
-    - cron: "0 0,12 * * *"
+    # Sync donations and redeploy once a day at 8 AM ET (12:00 UTC)
+    - cron: "0 12 * * *"
   workflow_dispatch:
 
 permissions:

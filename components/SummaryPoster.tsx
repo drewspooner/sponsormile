@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { Donation } from "@/lib/segmentAllocator";
 import { useFunraiseData } from "@/lib/useFunraiseData";
+import { applyOverrides } from "@/lib/applyOverrides";
 
 const GOAL = 5000;
 const MARATHON_MILES = 26.2;
@@ -28,7 +29,8 @@ export function SummaryPoster({ initialDonations }: Props) {
     if (loading || liveDonations.length === 0) return initialDonations;
     const liveIds = new Set(liveDonations.map((d) => d.id).filter(Boolean));
     const staticOnly = initialDonations.filter((d) => !d.id || !liveIds.has(d.id));
-    return [...staticOnly, ...liveDonations].sort((a, b) => (a.donationDate ?? 0) - (b.donationDate ?? 0));
+    const sorted = [...staticOnly, ...liveDonations].sort((a, b) => (a.donationDate ?? 0) - (b.donationDate ?? 0));
+    return applyOverrides(sorted);
   }, [loading, liveDonations, initialDonations]);
 
   const totalRaised = loading
