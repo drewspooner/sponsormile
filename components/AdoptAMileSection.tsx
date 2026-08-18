@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { MapClient } from "./MapClient";
 import { Coordinate } from "@/lib/routeProcessor";
-import { Donation, DONATION_PER_MILE } from "@/lib/segmentAllocator";
+import { Donation } from "@/lib/segmentAllocator";
 
 const fade = {
   initial: { opacity: 0 },
@@ -25,8 +25,6 @@ export function AdoptAMileSection({
   fundedMiles,
   mapEnabled,
 }: Props) {
-  const costPerQuarterMile = DONATION_PER_MILE * 0.25;
-
   return (
     <section id="adopt" className="border-b border-rule">
       <div className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-24">
@@ -49,7 +47,7 @@ export function AdoptAMileSection({
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mt-4 max-w-xl text-base leading-relaxed text-muted"
         >
-          Each ${costPerQuarterMile.toFixed(0)} donated funds a quarter mile of the 26.2-mile course.
+          The $5,000 goal funds all 26.2 miles. Every $50 covers about a quarter mile.
           Donations are applied to the route in the order they&apos;re received.
           Click any segment on the map to see who sponsored it.
         </motion.p>

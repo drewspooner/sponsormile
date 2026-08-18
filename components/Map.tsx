@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, ZoomControl, Marker, Tooltip } from "react-leaflet";
 import { latLngBounds, LatLngTuple, Map as LeafletMap, divIcon } from "leaflet";
 import { Coordinate, getRouteDistanceMiles } from "@/lib/routeProcessor";
-import { Donation, SegmentAllocation, buildSegments } from "@/lib/segmentAllocator";
+import { Donation, MARATHON_MILES, SegmentAllocation, buildSegments } from "@/lib/segmentAllocator";
 import { SegmentLayer } from "@/components/SegmentLayer";
 
 type FundraisingMapProps = {
@@ -145,7 +145,7 @@ export function FundraisingMap({ routeCoordinates, donations, fundedMiles }: Fun
   useEffect(() => {
     let raf = 0;
     const started = performance.now();
-    const target = Math.min(fundedMiles, 26.2);
+    const target = Math.min(fundedMiles, MARATHON_MILES);
     const duration = 1200;
 
     const tick = (now: number) => {
@@ -238,9 +238,6 @@ export function FundraisingMap({ routeCoordinates, donations, fundedMiles }: Fun
           )}
           {selected.donorMessage && (
             <p className="mt-1 text-sm italic text-muted">&ldquo;{selected.donorMessage}&rdquo;</p>
-          )}
-          {selected.state === "victory" && (
-            <p className="mt-1 text-xs uppercase tracking-[0.2em] text-ink">Victory Lap</p>
           )}
         </div>
       )}

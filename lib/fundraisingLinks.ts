@@ -1,5 +1,3 @@
-import { DONATION_PER_MILE } from "@/lib/segmentAllocator";
-
 export const DEFAULT_FUNDRAISER_URL = "https://beyondtyperun.funraise.org/fundraiser/drew-spooner";
 
 /** Fundraiser page URL — used for both display links and as the fallback checkout URL. */
@@ -18,8 +16,8 @@ export function buildCheckoutUrl(baseUrl: string, amount?: number): string {
 }
 
 export const DONATION_BUTTON_OPTIONS = [
-  { label: "Quarter mile", amount: DONATION_PER_MILE * 0.25 },
-  { label: "Half mile", amount: DONATION_PER_MILE * 0.5 },
-  { label: "1 mile", amount: DONATION_PER_MILE },
+  { label: "Quarter mile", amount: 50 },
+  { label: "Half mile", amount: 100 },
+  { label: "1 mile", amount: 200 },
   { label: "Custom", amount: null as number | null },
 ];

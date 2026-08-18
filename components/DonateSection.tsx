@@ -59,8 +59,8 @@ export function DonateSection({
         >
           {remaining > 0 ? (
             <>
-              {fmtUSD(remaining)} left to reach the {fmtUSD(goal)} goal. Every $50 funds a
-              quarter mile of the journey.
+              {fmtUSD(remaining)} left to reach the {fmtUSD(goal)} goal. Every $50 covers
+              about a quarter mile of the journey.
             </>
           ) : (
             <>The goal is reached — but more support means more impact for the T1D community.</>

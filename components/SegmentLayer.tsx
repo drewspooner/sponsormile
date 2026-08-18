@@ -19,7 +19,7 @@ export function SegmentLayer({ segments, maxVisibleMile, onSegmentClick }: Segme
   return (
     <>
       {segments.map((segment) => {
-        if (segment.state !== "unfunded" && segment.endMile > maxVisibleMile) return null;
+        if (segment.state !== "unfunded" && segment.startMile > maxVisibleMile) return null;
         const positions = toLatLng(segment.coordinates);
         if (positions.length < 2) return null;
 
@@ -29,9 +29,9 @@ export function SegmentLayer({ segments, maxVisibleMile, onSegmentClick }: Segme
             positions={positions}
             pathOptions={{
               color: segment.color,
-              weight: segment.state === "victory" ? 7 : 6,
+              weight: 6,
               opacity: segment.state === "unfunded" ? 0.55 : 0.95,
-              dashArray: segment.state === "unfunded" || segment.state === "victory" ? "8 8" : undefined,
+              dashArray: segment.state === "unfunded" ? "8 8" : undefined,
             }}
             eventHandlers={{
               click: () => onSegmentClick(segment),
@@ -47,7 +47,6 @@ export function SegmentLayer({ segments, maxVisibleMile, onSegmentClick }: Segme
                 donorSponsoredEndMile={segment.donorSponsoredEndMile}
                 donorTotalAmount={segment.donorTotalAmount}
                 amount={segment.amount}
-                isVictory={segment.state === "victory"}
               />
             </Tooltip>
             <Popup>
@@ -60,7 +59,6 @@ export function SegmentLayer({ segments, maxVisibleMile, onSegmentClick }: Segme
                 donorSponsoredEndMile={segment.donorSponsoredEndMile}
                 donorTotalAmount={segment.donorTotalAmount}
                 amount={segment.amount}
-                isVictory={segment.state === "victory"}
               />
             </Popup>
           </Polyline>

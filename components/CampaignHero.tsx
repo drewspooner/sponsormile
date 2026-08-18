@@ -63,7 +63,9 @@ export function CampaignHero({
   canEmbedForm,
   funraiseFormId,
 }: Props) {
-  const pct = Math.max(0, Math.min(100, (totalRaised / goal) * 100));
+  const pct = Math.max(0, (totalRaised / goal) * 100);
+  const barPct = Math.min(100, pct);
+  const displayMiles = Math.min(fundedMiles, marathonMiles);
   const milesRemaining = Math.max(0, marathonMiles - fundedMiles);
   const animatedTotal = useCountUp(totalRaised);
 
@@ -102,7 +104,7 @@ export function CampaignHero({
               <motion.div
                 className="h-px bg-ink"
                 initial={{ width: 0 }}
-                animate={{ width: `${pct}%` }}
+                animate={{ width: `${barPct}%` }}
                 transition={{ duration: 1.4, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               />
             </div>
@@ -112,7 +114,7 @@ export function CampaignHero({
               </span>
               <span>{Math.round(pct)}%</span>
               <span>
-                {fundedMiles.toFixed(1)} of {marathonMiles.toFixed(1)} miles
+                {displayMiles.toFixed(1)} of {marathonMiles.toFixed(1)} miles
               </span>
             </div>
           </div>
@@ -146,7 +148,9 @@ export function CampaignHero({
           </div>
 
           <p className="mt-10 text-xs text-muted">
-            {milesRemaining.toFixed(1)} miles left to fund.
+            {milesRemaining > 0
+              ? `${milesRemaining.toFixed(1)} miles left to fund.`
+              : "The full 26.2 miles are funded."}
           </p>
         </motion.div>
       </div>

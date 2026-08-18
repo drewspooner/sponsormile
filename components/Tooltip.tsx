@@ -9,7 +9,6 @@ type TooltipProps = {
   donorSponsoredEndMile: number | null;
   donorTotalAmount: number | null;
   amount: number;
-  isVictory: boolean;
 };
 
 function fmtAmount(value: number): string {
@@ -29,7 +28,6 @@ export function SegmentTooltip({
   donorSponsoredEndMile,
   donorTotalAmount,
   amount,
-  isVictory,
 }: TooltipProps) {
   const rangeStart = donorSponsoredStartMile ?? startMile;
   const rangeEnd = donorSponsoredEndMile ?? endMile;
@@ -45,9 +43,6 @@ export function SegmentTooltip({
       </p>
       {donorName && <p className="text-muted">{fmtAmount(displayAmount)}</p>}
       {donorMessage && <p className="mt-1 italic text-muted">&quot;{donorMessage}&quot;</p>}
-      {isVictory && (
-        <p className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em]">Victory Lap</p>
-      )}
     </div>
   );
 }

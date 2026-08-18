@@ -8,7 +8,7 @@ export type Donation = {
   donationDate?: number;
 };
 
-export type SegmentState = "unfunded" | "funded" | "victory";
+export type SegmentState = "unfunded" | "funded";
 
 export type SegmentAllocation = {
   id: string;
@@ -25,13 +25,14 @@ export type SegmentAllocation = {
   coordinates: Coordinate[];
 };
 
-export const DONATION_PER_MILE = 200;
+export const FUNDRAISING_GOAL = 5000;
+export const MARATHON_MILES = 26.2;
+/** $5,000 funds the full 26.2 miles, so each mile on the map is goal / marathon. */
+export const DONATION_PER_MILE = FUNDRAISING_GOAL / MARATHON_MILES;
 const MILES_PER_SEGMENT = 0.25;
-const MARATHON_MILES = 26.2;
 
 const PALETTE = ["#1d4ed8", "#f97316", "#16a34a", "#7e22ce", "#ec4899"];
 const UNFUNDED_COLOR = "#93b8d4";
-const VICTORY_COLOR = "#f59e0b";
 
 function round(value: number): number {
   return Number(value.toFixed(3));
@@ -41,14 +42,12 @@ export function getFundingSummary(donations: Donation[]) {
   const totalRaised = donations.reduce((sum, donation) => sum + donation.amount, 0);
   const fundedMiles = totalRaised / DONATION_PER_MILE;
   const progressMiles = Math.min(fundedMiles, MARATHON_MILES);
-  const victoryMiles = Math.max(fundedMiles - MARATHON_MILES, 0);
 
   return {
     totalRaised,
-    goal: 5000,
+    goal: FUNDRAISING_GOAL,
     fundedMiles,
     progressMiles,
-    victoryMiles,
     marathonMiles: MARATHON_MILES,
   };
 }
@@ -86,18 +85,21 @@ export function buildSegments(routeCoords: Coordinate[], donations: Donation[]):
   let runningMiles = 0;
   let colorIndex = 0;
 
-  donations.forEach((donation, donationIndex) => {
-    const donationMiles = milesFromAmount(donation.amount);
+  for (let donationIndex = 0; donationIndex < donations.length; donationIndex += 1) {
+    if (runningMiles >= drawableMiles) break;
+
+    const donation = donations[donationIndex];
     const start = runningMiles;
-    const end = runningMiles + donationMiles;
-    runningMiles = end;
+    const mappedEnd = Math.min(start + milesFromAmount(donation.amount), drawableMiles);
+    runningMiles = start + milesFromAmount(donation.amount);
+    if (mappedEnd <= start) continue;
 
     const donorColor = PALETTE[colorIndex];
     colorIndex = (colorIndex + 1) % PALETTE.length;
 
     baseSegments.forEach((segment, segmentIndex) => {
       const overlapStart = Math.max(segment.startMile, start);
-      const overlapEnd = Math.min(segment.endMile, end);
+      const overlapEnd = Math.min(segment.endMile, mappedEnd);
       if (overlapEnd <= overlapStart) return;
 
       const overlapMiles = overlapEnd - overlapStart;
@@ -107,35 +109,14 @@ export function buildSegments(routeCoords: Coordinate[], donations: Donation[]):
         donorName: donation.name,
         donorMessage: donation.message ?? null,
         donorSponsoredStartMile: start,
-        donorSponsoredEndMile: end,
+        donorSponsoredEndMile: mappedEnd,
         donorTotalAmount: donation.amount,
         amount: round(overlapMiles * DONATION_PER_MILE),
         startMile: overlapStart,
         endMile: overlapEnd,
         color: donorColor,
-        coordinates: sliceRouteByMiles(
-          routeCoords,
-          overlapStart,
-          Math.min(overlapEnd, MARATHON_MILES)
-        ),
+        coordinates: sliceRouteByMiles(routeCoords, overlapStart, overlapEnd),
       });
-    });
-  });
-
-  if (runningMiles > MARATHON_MILES) {
-    fundedSegments.push({
-      id: "victory-lap-overlay",
-      state: "victory",
-      donorName: "Victory Lap",
-      donorMessage: "We surpassed the fundraising goal and kept moving.",
-      donorSponsoredStartMile: MARATHON_MILES,
-      donorSponsoredEndMile: runningMiles,
-      donorTotalAmount: round((runningMiles - MARATHON_MILES) * DONATION_PER_MILE),
-      amount: round((runningMiles - MARATHON_MILES) * DONATION_PER_MILE),
-      startMile: MARATHON_MILES,
-      endMile: runningMiles,
-      color: VICTORY_COLOR,
-      coordinates: routeCoords,
     });
   }
 

@@ -2,13 +2,12 @@
 
 import { useMemo, useRef, useState } from "react";
 import { toPng } from "html-to-image";
-import { Donation } from "@/lib/segmentAllocator";
+import { Donation, DONATION_PER_MILE, FUNDRAISING_GOAL, MARATHON_MILES } from "@/lib/segmentAllocator";
 import { useFunraiseData } from "@/lib/useFunraiseData";
 import { applyOverrides } from "@/lib/applyOverrides";
 
-const GOAL = 5000;
-const MARATHON_MILES = 26.2;
-const COST_PER_MILE = 200;
+const GOAL = FUNDRAISING_GOAL;
+const COST_PER_MILE = DONATION_PER_MILE;
 
 // dark green · dark gray · lighter green · deeper amber (from #FFAB40)
 const NAME_COLORS = ["#1a5c2e", "#2c2c2c", "#3d9b55", "#d97706"];
